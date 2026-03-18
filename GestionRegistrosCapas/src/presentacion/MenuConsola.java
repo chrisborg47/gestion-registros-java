@@ -1,15 +1,14 @@
 package presentacion;
 
 import entidades.Registro;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import logica.RegistroService;
 
 public class MenuConsola {
 
-    private Scanner scanner;
-    private RegistroService registroService;
+    private final Scanner scanner;
+    private final RegistroService registroService;
 
     public MenuConsola() {
         scanner = new Scanner(System.in);
@@ -17,7 +16,7 @@ public class MenuConsola {
     }
 
     public void iniciar() {
-        int opcion = 0;
+        int opcion;
 
         do {
             mostrarMenu();
@@ -61,109 +60,86 @@ public class MenuConsola {
     }
 
     private void agregarRegistro() {
-        try {
-            System.out.println("----- Agregar registro -----");
+        System.out.println("----- Agregar registro -----");
 
-            int id = leerEntero("Ingrese el id: ");
-            String nombre = leerTexto("Ingrese el nombre: ");
-            String dato1 = leerTexto("Ingrese el dato1: ");
-            String dato2 = leerTexto("Ingrese el dato2: ");
+        int id = leerEntero("Ingrese el id: ");
+        String nombre = leerTexto("Ingrese el nombre: ");
+        String dato1 = leerTexto("Ingrese el dato1: ");
+        String dato2 = leerTexto("Ingrese el dato2: ");
 
-            Registro registro = new Registro(id, nombre, dato1, dato2);
-            String mensaje = registroService.agregarRegistro(registro);
-
-            System.out.println(mensaje);
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al agregar el registro: " + e.getMessage());
-        }
+        Registro registro = new Registro(id, nombre, dato1, dato2);
+        String mensaje = registroService.agregarRegistro(registro);
+        System.out.println(mensaje);
     }
 
     private void listarRegistros() {
-        try {
-            System.out.println("----- Lista de registros -----");
+        System.out.println("----- Lista de registros -----");
 
-            List<Registro> registros = registroService.listarRegistros();
+        List<Registro> registros = registroService.listarRegistros();
 
-            if (registros.isEmpty()) {
-                System.out.println("No hay registros guardados.");
-            } else {
-                for (Registro registro : registros) {
-                    System.out.println(registro);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al listar los registros: " + e.getMessage());
+        if (registros.isEmpty()) {
+            System.out.println("No hay registros guardados.");
+            return;
+        }
+
+        for (Registro registro : registros) {
+            System.out.println(registro);
         }
     }
 
     private void buscarRegistroPorId() {
-        try {
-            System.out.println("----- Buscar registro por id -----");
+        System.out.println("----- Buscar registro por id -----");
 
-            int id = leerEntero("Ingrese el id a buscar: ");
-            Registro registro = registroService.buscarRegistroPorId(id);
+        int id = leerEntero("Ingrese el id a buscar: ");
+        Registro registro = registroService.buscarRegistroPorId(id);
 
-            if (registro != null) {
-                System.out.println("Registro encontrado:");
-                System.out.println(registro);
-            } else {
-                System.out.println("No se encontró ningún registro con ese id.");
-            }
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al buscar el registro: " + e.getMessage());
+        if (registro != null) {
+            System.out.println("Registro encontrado:");
+            System.out.println(registro);
+        } else {
+            System.out.println("No se encontró ningún registro con ese id.");
         }
     }
 
     private void actualizarRegistro() {
-        try {
-            System.out.println("----- Actualizar registro -----");
+        System.out.println("----- Actualizar registro -----");
 
-            int id = leerEntero("Ingrese el id del registro a actualizar: ");
-            Registro existente = registroService.buscarRegistroPorId(id);
+        int id = leerEntero("Ingrese el id del registro a actualizar: ");
+        Registro existente = registroService.buscarRegistroPorId(id);
 
-            if (existente == null) {
-                System.out.println("No existe un registro con ese id.");
-                return;
-            }
-
-            System.out.println("Registro actual: " + existente);
-
-            String nombre = leerTexto("Ingrese el nuevo nombre: ");
-            String dato1 = leerTexto("Ingrese el nuevo dato1: ");
-            String dato2 = leerTexto("Ingrese el nuevo dato2: ");
-
-            Registro registroActualizado = new Registro(id, nombre, dato1, dato2);
-            String mensaje = registroService.actualizarRegistro(registroActualizado);
-
-            System.out.println(mensaje);
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al actualizar el registro: " + e.getMessage());
+        if (existente == null) {
+            System.out.println("No existe un registro con ese id.");
+            return;
         }
+
+        System.out.println("Registro actual: " + existente);
+
+        String nombre = leerTexto("Ingrese el nuevo nombre: ");
+        String dato1 = leerTexto("Ingrese el nuevo dato1: ");
+        String dato2 = leerTexto("Ingrese el nuevo dato2: ");
+
+        Registro registroActualizado = new Registro(id, nombre, dato1, dato2);
+        String mensaje = registroService.actualizarRegistro(registroActualizado);
+        System.out.println(mensaje);
     }
 
     private void eliminarRegistro() {
-        try {
-            System.out.println("----- Eliminar registro -----");
+        System.out.println("----- Eliminar registro -----");
 
-            int id = leerEntero("Ingrese el id del registro a eliminar: ");
-            String mensaje = registroService.eliminarRegistro(id);
-
-            System.out.println(mensaje);
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al eliminar el registro: " + e.getMessage());
-        }
+        int id = leerEntero("Ingrese el id del registro a eliminar: ");
+        String mensaje = registroService.eliminarRegistro(id);
+        System.out.println(mensaje);
     }
 
     private int leerEntero(String mensaje) {
         while (true) {
+            System.out.print(mensaje);
+            String entrada = scanner.nextLine().trim();
+
             try {
-                System.out.print(mensaje);
-                int numero = scanner.nextInt();
-                scanner.nextLine();
-                return numero;
-            } catch (InputMismatchException e) {
+                return Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Debe ingresar un número entero.");
-                scanner.nextLine();
             }
         }
     }

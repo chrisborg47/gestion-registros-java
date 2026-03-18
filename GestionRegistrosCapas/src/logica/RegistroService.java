@@ -6,32 +6,19 @@ import java.util.List;
 
 public class RegistroService {
 
-    private RegistroDAO registroDAO;
+    private final RegistroDAO registroDAO;
 
     public RegistroService() {
         registroDAO = new RegistroDAO();
     }
 
     public String agregarRegistro(Registro registro) {
-        if (registro == null) {
-            return "Error: el registro no puede ser nulo.";
+        String mensajeValidacion = validarRegistro(registro);
+        if (mensajeValidacion != null) {
+            return mensajeValidacion;
         }
 
-        if (registro.getId() <= 0) {
-            return "Error: el id debe ser mayor que 0.";
-        }
-
-        if (registro.getNombre() == null || registro.getNombre().trim().isEmpty()) {
-            return "Error: el nombre no puede estar vacío.";
-        }
-
-        if (registro.getDato1() == null || registro.getDato1().trim().isEmpty()) {
-            return "Error: dato1 no puede estar vacío.";
-        }
-
-        if (registro.getDato2() == null || registro.getDato2().trim().isEmpty()) {
-            return "Error: dato2 no puede estar vacío.";
-        }
+        normalizarRegistro(registro);
 
         Registro existente = registroDAO.buscarRegistroPorId(registro.getId());
         if (existente != null) {
@@ -39,12 +26,10 @@ public class RegistroService {
         }
 
         boolean guardado = registroDAO.guardarRegistro(registro);
-
         if (guardado) {
             return "Registro guardado correctamente.";
-        } else {
-            return "Error: no se pudo guardar el registro.";
         }
+        return "Error: no se pudo guardar el registro.";
     }
 
     public List<Registro> listarRegistros() {
@@ -60,25 +45,12 @@ public class RegistroService {
     }
 
     public String actualizarRegistro(Registro registro) {
-        if (registro == null) {
-            return "Error: el registro no puede ser nulo.";
+        String mensajeValidacion = validarRegistro(registro);
+        if (mensajeValidacion != null) {
+            return mensajeValidacion;
         }
 
-        if (registro.getId() <= 0) {
-            return "Error: el id debe ser mayor que 0.";
-        }
-
-        if (registro.getNombre() == null || registro.getNombre().trim().isEmpty()) {
-            return "Error: el nombre no puede estar vacío.";
-        }
-
-        if (registro.getDato1() == null || registro.getDato1().trim().isEmpty()) {
-            return "Error: dato1 no puede estar vacío.";
-        }
-
-        if (registro.getDato2() == null || registro.getDato2().trim().isEmpty()) {
-            return "Error: dato2 no puede estar vacío.";
-        }
+        normalizarRegistro(registro);
 
         Registro existente = registroDAO.buscarRegistroPorId(registro.getId());
         if (existente == null) {
@@ -86,12 +58,10 @@ public class RegistroService {
         }
 
         boolean actualizado = registroDAO.actualizarRegistro(registro);
-
         if (actualizado) {
             return "Registro actualizado correctamente.";
-        } else {
-            return "Error: no se pudo actualizar el registro.";
         }
+        return "Error: no se pudo actualizar el registro.";
     }
 
     public String eliminarRegistro(int id) {
@@ -105,11 +75,43 @@ public class RegistroService {
         }
 
         boolean eliminado = registroDAO.eliminarRegistro(id);
-
         if (eliminado) {
             return "Registro eliminado correctamente.";
-        } else {
-            return "Error: no se pudo eliminar el registro.";
         }
+        return "Error: no se pudo eliminar el registro.";
+    }
+
+    private String validarRegistro(Registro registro) {
+        if (registro == null) {
+            return "Error: el registro no puede ser nulo.";
+        }
+
+        if (registro.getId() <= 0) {
+            return "Error: el id debe ser mayor que 0.";
+        }
+
+        if (estaVacio(registro.getNombre())) {
+            return "Error: el nombre no puede estar vacío.";
+        }
+
+        if (estaVacio(registro.getDato1())) {
+            return "Error: dato1 no puede estar vacío.";
+        }
+
+        if (estaVacio(registro.getDato2())) {
+            return "Error: dato2 no puede estar vacío.";
+        }
+
+        return null;
+    }
+
+    private boolean estaVacio(String texto) {
+        return texto == null || texto.trim().isEmpty();
+    }
+
+    private void normalizarRegistro(Registro registro) {
+        registro.setNombre(registro.getNombre().trim());
+        registro.setDato1(registro.getDato1().trim());
+        registro.setDato2(registro.getDato2().trim());
     }
 }
