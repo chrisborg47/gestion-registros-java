@@ -1,0 +1,98 @@
+DOCUMENTACIÓN DEL USO DE INTELIGENCIA ARTIFICIAL
+Proyecto: Sistema CRUD en Java con Arquitectura por Capas y Archivos de Texto
+
+==================================================
+Prompt #1:
+"Quiero desarrollar un sistema CRUD en Java usando arquitectura por capas y almacenamiento en archivos de texto (.txt), sin base de datos. Necesito que me propongas la estructura del proyecto en NetBeans con Java Ant, indicando los paquetes y clases recomendadas para estas capas: Presentación, Lógica de Negocio, Acceso a Datos y Entidades. Quiero que expliques la responsabilidad de cada capa y de cada clase sugerida. No mezcles responsabilidades entre capas. El sistema debe permitir operaciones CRUD y manejar persistencia en archivos de texto."
+
+Respuesta IA (resumen):
+La IA propuso una estructura de proyecto organizada por capas, con paquetes para entidades, acceso a datos, lógica de negocio y presentación. También sugirió clases principales como Registro, RegistroDAO, RegistroService y MenuConsola.
+
+Uso aplicado:
+Se utilizó la estructura sugerida para crear los paquetes y clases base del proyecto en NetBeans.
+
+Modificación realizada:
+Se mantuvo la estructura general propuesta y se adaptó el nombre de la clase principal del sistema.
+
+==================================================
+Prompt #2:
+"Genera la clase Java llamada Registro para la capa de Entidades. Debe tener los siguientes atributos: int id, String nombre, String dato1, String dato2. Requisitos: usar encapsulamiento, constructor vacío, constructor con parámetros, getters y setters, método toString, código claro y fácil de entender para un estudiante. No agregues lógica de negocio ni acceso a archivos en esta clase."
+
+Respuesta IA (resumen):
+La IA generó la clase Registro con atributos privados, constructores, métodos getter y setter, y método toString.
+
+Uso aplicado:
+Se utilizó como entidad principal del sistema para representar cada registro almacenado.
+
+Modificación realizada:
+Se revisó el código generado y se ajustó según la convención del proyecto.
+
+==================================================
+Prompt #3:
+"Genera una clase Java llamada RegistroDAO para la capa de Acceso a Datos. La clase debe manejar un archivo de texto llamado registros.txt para realizar operaciones CRUD de objetos Registro. Cada registro debe almacenarse en una línea con este formato: id|nombre|dato1|dato2. La entidad Registro tiene estos atributos: int id, String nombre, String dato1, String dato2. Necesito los siguientes métodos: boolean guardarRegistro(Registro registro), List<Registro> listarRegistros(), Registro buscarRegistroPorId(int id), boolean actualizarRegistro(Registro registro), boolean eliminarRegistro(int id). Requisitos: usar archivos de texto, no base de datos, usar try-with-resources, usar manejo de errores con try-catch, usar buenas prácticas de programación, para actualizar y eliminar, usar un archivo temporal si es necesario, no mezclar lógica de negocio dentro del DAO, incluir los imports necesarios, el código debe ser claro, funcional y fácil de entender para un estudiante."
+
+Respuesta IA (resumen):
+La IA generó una clase DAO para manejar el archivo registros.txt, incluyendo métodos CRUD para guardar, listar, buscar, actualizar y eliminar registros usando archivos de texto.
+
+Uso aplicado:
+Se utilizó como base para implementar la capa de Acceso a Datos del sistema.
+
+Modificación realizada:
+Se revisaron nombres de métodos, manejo de rutas y detalles del procesamiento del archivo según las necesidades del proyecto.
+
+==================================================
+Prompt #4:
+"Genera una clase Java llamada RegistroService para la capa de Lógica de Negocio. La clase debe trabajar con RegistroDAO y encargarse de validar los datos antes de guardarlos, actualizarlos o eliminarlos. La entidad Registro tiene estos atributos: int id, String nombre, String dato1, String dato2. El DAO tiene estos métodos: boolean guardarRegistro(Registro registro), List<Registro> listarRegistros(), Registro buscarRegistroPorId(int id), boolean actualizarRegistro(Registro registro), boolean eliminarRegistro(int id). Quiero que la clase tenga métodos equivalentes para: agregar registro, listar registros, buscar registro por id, actualizar registro, eliminar registro. Requisitos: validar campos vacíos, validar que el id sea mayor que 0, evitar registrar ids repetidos, usar mensajes claros de error, no mezclar acceso directo a archivos dentro del service, no poner lógica de presentación en esta clase, incluir los imports necesarios, código claro, ordenado y fácil de entender para un estudiante."
+
+Respuesta IA (resumen):
+La IA generó una clase de lógica de negocio que utiliza RegistroDAO y valida los datos antes de ejecutar las operaciones CRUD.
+
+Uso aplicado:
+Se utilizó como base para implementar la capa de Lógica de Negocio del sistema, centralizando validaciones y controlando la interacción con el DAO.
+
+Modificación realizada:
+Se ajustaron algunas validaciones y nombres de métodos para adaptarlos al diseño final del proyecto.
+
+==================================================
+Prompt #5:
+"Genera una clase Java llamada MenuConsola para la capa de Presentación. La clase debe mostrar un menú por consola que permita realizar las operaciones CRUD de un sistema de registros. Debe trabajar con RegistroService y permitir estas opciones: 1. Agregar registro 2. Listar registros 3. Buscar registro por id 4. Actualizar registro 5. Eliminar registro 6. Salir. La entidad Registro tiene estos atributos: int id, String nombre, String dato1, String dato2. Requisitos: usar Scanner para leer datos, validar entradas del usuario, manejar errores para que el programa no se caiga, mostrar mensajes claros en consola, no colocar lógica de acceso a datos directamente en esta clase, no colocar validaciones de negocio complejas en esta clase, incluir un método para mostrar el menú y otro para iniciar la ejecución, incluir los imports necesarios, código claro, ordenado y fácil de entender para un estudiante."
+
+Respuesta IA (resumen):
+La IA generó una clase de presentación por consola con un menú interactivo para ejecutar las operaciones CRUD mediante RegistroService.
+
+Uso aplicado:
+Se utilizó como base para implementar la interacción con el usuario desde consola dentro de la capa de Presentación.
+
+Modificación realizada:
+Se ajustaron algunos mensajes, nombres de métodos y controles de entrada para que se adaptaran mejor al flujo del sistema.
+
+==================================================
+Prompt #6:
+"Genera una clase principal en Java llamada GestionRegistrosCapas que inicialice el sistema y ejecute la clase MenuConsola. Requisitos: crear el método main, instanciar MenuConsola, llamar al método que inicia el menú, código simple, limpio y fácil de entender."
+
+Respuesta IA (resumen):
+La IA generó una clase principal con el método main para iniciar la ejecución del sistema.
+
+Uso aplicado:
+Se utilizó como punto de entrada del proyecto para ejecutar el menú de la aplicación.
+
+Modificación realizada:
+Se adaptó el nombre del método invocado según la implementación final de la clase MenuConsola.
+
+==================================================
+Prompt #7:
+"Estoy desarrollando un sistema CRUD en Java con arquitectura por capas y persistencia en archivos de texto (.txt), sin base de datos. Mi proyecto tiene estas clases: Registro (Entidad), RegistroDAO (Acceso a Datos), RegistroService (Lógica de Negocio), MenuConsola (Presentación) y GestionRegistrosCapas (clase principal). Quiero que revises el código completo y hagas lo siguiente: verificar que la arquitectura por capas esté respetada, corregir errores de compilación si existen, corregir errores lógicos en las operaciones CRUD, confirmar que se use correctamente el archivo registros.txt, verificar que se esté usando try-with-resources en el DAO, revisar que no haya lógica de negocio en la capa de presentación, revisar que no haya acceso directo a archivos fuera del DAO, mejorar validaciones básicas sin complicar demasiado el código y explicar qué cambios realizaste y por qué."
+
+Respuesta IA (resumen):
+La IA revisó el proyecto completo y confirmó que la arquitectura por capas se mantenía correctamente. Además, corrigió el manejo del archivo registros.txt en la capa DAO, mejoró la robustez del CRUD, reforzó validaciones en la capa de lógica de negocio y simplificó la clase de presentación para evitar lógica innecesaria.
+
+Uso aplicado:
+Se utilizó para revisar y mejorar el funcionamiento general del sistema antes de realizar las pruebas finales.
+
+Modificación realizada:
+Se aceptaron ajustes en RegistroDAO, RegistroService y MenuConsola para mejorar validaciones, lectura de datos, tratamiento de líneas inválidas y seguridad en actualización y eliminación de registros.
+
+==================================================
+Conclusión del uso de IA:
+
+La Inteligencia Artificial se utilizó como herramienta de apoyo para proponer la estructura del sistema, generar clases base, corregir errores y mejorar la robustez del proyecto. En todos los casos, el código fue revisado, comprendido y adaptado manualmente antes de ser integrado al sistema final, respetando los requisitos académicos de arquitectura por capas, persistencia en archivos de texto y operaciones CRUD.
